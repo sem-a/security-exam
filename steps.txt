@@ -85,13 +85,19 @@ echo "U2FsdGVkX19hZGRlZm9yZW5jZS4=" | openssl enc -aes-256-cbc -d -a -pass pass:
    - Откройте полученную ссылку в браузере.
    - На странице будет сообщение с намеком открыть инструменты разработчика (обычно это F12).
    
-5. **Запуск JavaScript-кода для получения информации о предыдущем сайте**:
+5. **Запуск JavaScript-кода для получения информации**:
     Вставьте следующий код в консоль инструментов разработчика и выполните его:
-    ```javascript
-    fetch('http://localhost/info') // Предполагается наличие API на локальном сервере 
-      .then(response => response.json())
-      .then(data => console.log("Информация об уязвимости:", data))
-      .catch(error => console.error("Ошибка при получении данных:", error));
+    ```
+     const hiddenElements = Array.from(document.querySelectorAll('*')).filter(element => {
+        const style = window.getComputedStyle(element);
+        return style.opacity === '0' || style.display === 'none';
+     });
+     console.log(hiddenElements);
+
+     hiddenElements.forEach(element => {
+        element.style.display = 'block';
+        element.style.opacity = '1'; 
+     });
     ```
 
 6. **Анализ полученной информации о уязвимостях системы**:
